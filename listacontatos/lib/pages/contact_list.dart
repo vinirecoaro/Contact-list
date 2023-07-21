@@ -15,7 +15,6 @@ class _ContactListState extends State<ContactList> {
       appBar: AppBar(
         title: const Text("Lista de Contatos"),
       ),
-      body: Container(),
     ));
   }
 }
