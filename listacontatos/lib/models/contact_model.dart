@@ -1,43 +1,42 @@
-class ContactModel {
-  List<Results>? results;
+class ContactsModel {
+  List<ContactModel>? contacts;
 
-  ContactModel({this.results});
+  ContactsModel({this.contacts});
 
-  ContactModel.fromJson(Map<String, dynamic> json) {
+  ContactsModel.fromJson(Map<String, dynamic> json) {
     if (json['results'] != null) {
-      results = <Results>[];
+      contacts = <ContactModel>[];
       json['results'].forEach((v) {
-        results!.add(new Results.fromJson(v));
+        contacts!.add(new ContactModel.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.results != null) {
-      data['results'] = this.results!.map((v) => v.toJson()).toList();
+    if (this.contacts != null) {
+      data['results'] = this.contacts!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Results {
-  String? objectId;
-  String? name;
-  String? phoneNumber;
-  String? photoPath;
-  String? createdAt;
-  String? updatedAt;
+class ContactModel {
+  String objectId = "";
+  String name = "";
+  String phoneNumber = "";
+  String photoPath = "";
+  String createdAt = "";
+  String updatedAt = "";
 
-  Results(
-      {this.objectId,
-      this.name,
-      this.phoneNumber,
-      this.photoPath,
-      this.createdAt,
-      this.updatedAt});
+  ContactModel(this.objectId, this.name, this.phoneNumber, this.photoPath,
+      this.createdAt, this.updatedAt);
 
-  Results.fromJson(Map<String, dynamic> json) {
+  ContactModel.empty();
+
+  ContactModel.create(this.name, this.phoneNumber, this.photoPath);
+
+  ContactModel.fromJson(Map<String, dynamic> json) {
     objectId = json['objectId'];
     name = json['name'];
     phoneNumber = json['phone_number'];
@@ -48,12 +47,12 @@ class Results {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['objectId'] = this.objectId;
-    data['name'] = this.name;
-    data['phone_number'] = this.phoneNumber;
-    data['photo_path'] = this.photoPath;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
+    data['objectId'] = objectId;
+    data['name'] = name;
+    data['phone_number'] = phoneNumber;
+    data['photo_path'] = photoPath;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }
