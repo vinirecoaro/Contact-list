@@ -7,15 +7,15 @@ class ContactsModel {
     if (json['results'] != null) {
       contacts = <ContactModel>[];
       json['results'].forEach((v) {
-        contacts!.add(new ContactModel.fromJson(v));
+        contacts!.add(ContactModel.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.contacts != null) {
-      data['results'] = this.contacts!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (contacts != null) {
+      data['results'] = contacts!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -46,13 +46,10 @@ class ContactModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['objectId'] = objectId;
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
     data['phone_number'] = phoneNumber;
     data['photo_path'] = photoPath;
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
     return data;
   }
 }
