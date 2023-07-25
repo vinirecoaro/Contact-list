@@ -1,22 +1,20 @@
 class ContactsModel {
-  List<ContactModel>? contacts;
+  List<ContactModel> contacts = [];
 
-  ContactsModel({this.contacts});
+  ContactsModel(this.contacts);
 
   ContactsModel.fromJson(Map<String, dynamic> json) {
     if (json['results'] != null) {
       contacts = <ContactModel>[];
       json['results'].forEach((v) {
-        contacts!.add(ContactModel.fromJson(v));
+        contacts.add(ContactModel.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (contacts != null) {
-      data['results'] = contacts!.map((v) => v.toJson()).toList();
-    }
+    data['results'] = contacts.map((v) => v.toJson()).toList();
     return data;
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:listacontatos/repositories/contact_repository.dart';
+import 'package:listacontatos/widgets/card_label.dart';
+
+import '../models/contact_model.dart';
 
 class ContactList extends StatefulWidget {
   const ContactList({super.key});
@@ -14,6 +17,19 @@ class _ContactListState extends State<ContactList> {
   var photoPathController = TextEditingController(text: "");
 
   var contactRepository = ContactRepository();
+
+  var _contacts = ContactsModel([]);
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  loadData() async {
+    _contacts = await contactRepository.obtainContacts();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +84,7 @@ class _ContactListState extends State<ContactList> {
                               phoneNumberController.text,
                               photoPathController.text);
                           Navigator.pop(context);
+                          loadData();
                         },
                         child: const Text("Salvar"))
                   ],
@@ -75,6 +92,21 @@ class _ContactListState extends State<ContactList> {
               });
         },
       ),
+      body: ListView.builder(
+          itemCount: _contacts.contacts.length,
+          itemBuilder: (BuildContext bc, int index) {
+            var contact = _contacts.contacts[index];
+            return Dismissible(
+                onDismissed: (DismissDirection dismissDirection) async {
+                  await contactRepository.delete(contact.objectId);
+                  loadData();
+                },
+                key: Key(contact.objectId),
+                child: CardLabel(
+                    image: contact.photoPath,
+                    phoneNumber: contact.phoneNumber,
+                    name: contact.name));
+          }),
     ));
   }
 }

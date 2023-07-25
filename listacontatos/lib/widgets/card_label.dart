@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CardLabel extends StatefulWidget {
-  final Image image;
-  final int phoneNumber;
+  final String image;
+  final String phoneNumber;
   final String name;
   const CardLabel(
       {super.key,
@@ -40,7 +40,7 @@ class _CardLabelState extends State<CardLabel> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text("${widget.phoneNumber}"),
+                  Text(widget.phoneNumber),
                 ],
               ),
             )
