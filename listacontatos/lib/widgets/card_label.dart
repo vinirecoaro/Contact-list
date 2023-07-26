@@ -1,12 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class CardLabel extends StatefulWidget {
-  final String image;
+  final String photoPath;
   final String phoneNumber;
   final String name;
   const CardLabel(
       {super.key,
-      required this.image,
+      required this.photoPath,
       required this.phoneNumber,
       required this.name});
 
@@ -23,13 +25,18 @@ class _CardLabelState extends State<CardLabel> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Row(
           children: [
-            const Column(
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.people,
-                  size: 75,
-                )
+                widget.photoPath == ""
+                    ? const Icon(
+                        Icons.people,
+                        size: 75,
+                      )
+                    : SizedBox(
+                        height: 75,
+                        child: Image.file(File(widget.photoPath)),
+                      )
               ],
             ),
             Expanded(
