@@ -148,21 +148,28 @@ class _ContactListState extends State<ContactList> {
               });
         },
       ),
-      body: ListView.builder(
-          itemCount: _contacts.contacts.length,
-          itemBuilder: (BuildContext bc, int index) {
-            var contact = _contacts.contacts[index];
-            return Dismissible(
-                onDismissed: (DismissDirection dismissDirection) async {
-                  await contactRepository.delete(contact.objectId);
-                  loadData();
-                },
-                key: Key(contact.objectId),
-                child: CardLabel(
-                    photoPath: contact.photoPath,
-                    phoneNumber: contact.phoneNumber,
-                    name: contact.name));
-          }),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            ListView.builder(
+                shrinkWrap: true,
+                itemCount: _contacts.contacts.length,
+                itemBuilder: (BuildContext bc, int index) {
+                  var contact = _contacts.contacts[index];
+                  return Dismissible(
+                      onDismissed: (DismissDirection dismissDirection) async {
+                        await contactRepository.delete(contact.objectId);
+                        loadData();
+                      },
+                      key: Key(contact.objectId),
+                      child: CardLabel(
+                          photoPath: contact.photoPath,
+                          phoneNumber: contact.phoneNumber,
+                          name: contact.name));
+                }),
+          ],
+        ),
+      ),
     ));
   }
 }
